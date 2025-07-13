@@ -1,0 +1,59 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+.venv/
+venv/
+env/
+# Environments created by tools like poetry, hatch (if not in .venv)
+.hatch/
+.poetry/
+.uv/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# OS/IDE specific
+.DS_Store
+.vscode/ # VS Code workspace settings, tasks, launch configs (if not shared)
+.idea/    # IntelliJ IDEA files
+*.iml
+
+# Notebooks
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/ # Specifically for the notebooks directory
+
+# Data and Models (Crucial for ML/DL projects!)
+data/ # Raw, processed, or intermediate data
+models/ # Trained model weights, checkpoints
+results/ # Experiment results, plots, logs
+logs/    # Application logs
+*.npy
+*.npz
+*.pt     # PyTorch model files
+*.pth    # PyTorch model files
+*.pkl    # Pickle files
+*.bin    # Binary files (e.g., Hugging Face model weights)
+*.safetensors # Newer format for model weights
+
+# Environment variables
+.env
+.env.*
+!.env.example # Keep example files for environment variables if you have them
+
+# Testing
+.pytest_cache/
+.coverage
+
+# Miscellaneous
+*~
+*.bak
+*.swp
+
+# Devcontainer
+.devcontainer/devcontainer.json
