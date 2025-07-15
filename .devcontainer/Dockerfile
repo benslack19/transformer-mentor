@@ -19,11 +19,13 @@ RUN groupadd --gid $USER_GID $USERNAME \
         git \
         curl \
         build-essential \
-        # Dependencies for pre-commit hooks and Python packages that need compilation
         libssl-dev \
         libffi-dev \
-        # Install Zsh for the interactive shell
         zsh \
+        # Install sudo
+        sudo \
+    && echo $USERNAME ALL=\(ALL\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

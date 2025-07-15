@@ -3,7 +3,7 @@ name = "transformer-mentor"
 version = "0.1.0"
 description = "A comprehensive repository for learning and building Transformer models from scratch."
 authors = [
-    { name = "Your Name", email = "your.email@example.com" }
+    { name = "benslack19", email = "your.email@example.com" }
 ]
 license = { text = "MIT" }
 readme = "README.md"
@@ -22,6 +22,7 @@ classifiers = [
 ]
 
 dependencies = [
+    "pandas>=2.2.0",
     "torch>=2.3.0", # Adjust if you target specific CUDA versions for cloud GPUs later
     "transformers>=4.0.0",
     "datasets>=2.0.0",
