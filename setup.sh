@@ -3,6 +3,9 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
+# Install SSH
+sudo apt-get update && sudo apt-get install -y openssh-client openssh-server
+
 echo "--- Running make setup ---"
 make setup
 
