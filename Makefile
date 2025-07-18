@@ -2,8 +2,10 @@
 
 # Define variables
 VENV_DIR := .venv
+# Use the full path for python and pip directly within the venv
+# This ensures we're always using the correct interpreter that's inside the venv
 PYTHON := $(VENV_DIR)/bin/python
-# HATCH := $(VENV_DIR)/bin/hatch # We won't rely on Hatch being in the venv for initial setup
+PIP := $(VENV_DIR)/bin/pip
 
 # Default target
 all: setup dev
@@ -11,18 +13,31 @@ all: setup dev
 # Setup the virtual environment and install dependencies
 setup:
 	@echo "Setting up virtual environment and installing dependencies..."
-	# --- FIX STARTS HERE ---
-	# Ensure the parent directory exists for the virtual environment
-	@mkdir -p $(VENV_DIR)
-	# Create the virtual environment using the system's 'python3' command first
-	@python3 -m venv $(VENV_DIR)
-	# --- FIX ENDS HERE ---
-	@echo "Upgrading pip and installing project dependencies..."
-	@$(PYTHON) -m pip install --upgrade pip
-	@$(PYTHON) -m pip install -e .[dev]
+	# Combine venv creation and initial pip install into a single shell command
+	# This ensures the virtual environment is fully set up before trying to use its pip
+	@mkdir -p $(VENV_DIR) && \
+	python3 -m venv $(VENV_DIR) && \
+	$(VENV_DIR)/bin/pip install --upgrade pip && \
+	$(VENV_DIR)/bin/pip install -e .[dev] && \
+	$(VENV_DIR)/bin/pip install pre-commit
 	@echo "Virtual environment setup complete. Installing pre-commit hooks..."
 	@$(PYTHON) -m pre_commit install
 	@echo "Pre-commit hooks installed."
+
+$(PIP):
+	@echo "Creating virtual environment at $(VENV_DIR)..."
+	# Ensure the parent directory exists for the virtual environment
+	@mkdir -p $(VENV_DIR)
+	# Create the virtual environment using the python3 command available in the container
+	# The $(shell which python3) finds the full path to python3 in the container's PATH
+	$(shell which python3) -m venv $(VENV_DIR)
+
+	# --- Debugging Check ---
+	@if [ ! -f "$(PIP)" ]; then \
+		echo "ERROR: $(PIP) was not created by venv. Check Python installation and permissions."; \
+		exit 1; \
+	fi
+	@echo "$(PIP) exists. Ready to use."
 
 # Run development mode (e.g., Jupyter)
 dev:

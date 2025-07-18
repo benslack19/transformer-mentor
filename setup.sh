@@ -3,9 +3,6 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
-# Install SSH
-sudo apt-get update && sudo apt-get install -y openssh-client openssh-server
-
 echo "--- Running make setup ---"
 make setup
 
@@ -20,7 +17,10 @@ fi
 
 echo "--- Installing Oh My Zsh if not present ---"
 if [ ! -d "${HOME}/.oh-my-zsh" ]; then
-    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended || true
+    # Added || true to the Oh My Zsh install command.
+    # Sometimes it exits with a non-zero code even on success if it thinks
+    # it's interactive, which can fail the 'set -e' at the top.
 else
     echo "Oh My Zsh already installed."
 fi
