@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# test
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
@@ -34,35 +35,17 @@ else
     exit 1
 fi
 
-echo "--- Setting up SSH agent forwarding ---"
+echo "--- Setting up SSH directory permissions ---"
 # Ensure SSH directory exists and has correct permissions
 mkdir -p /home/vscode/.ssh
 chown -R vscode:vscode /home/vscode/.ssh
 chmod 700 /home/vscode/.ssh
 
-# Set correct permissions on the mounted SSH key files
-if [ -f "/home/vscode/.ssh/id_ed25519" ]; then
-    chmod 600 /home/vscode/.ssh/id_ed25519
-    chown vscode:vscode /home/vscode/.ssh/id_ed25519
-fi
+# No need to chown/chmod individual key files or create ~/.ssh/config here
+# if relying on VS Code's native agent forwarding.
+# VS Code will set SSH_AUTH_SOCK to its internal proxy.
 
-if [ -f "/home/vscode/.ssh/id_ed25519.pub" ]; then
-    chmod 644 /home/vscode/.ssh/id_ed25519.pub
-    chown vscode:vscode /home/vscode/.ssh/id_ed25519.pub
-fi
-
-# Create a minimal SSH config for the specific key
-cat > /home/vscode/.ssh/config << 'EOF'
-Host *
-    AddKeysToAgent yes
-    ForwardAgent yes
-    IdentitiesOnly yes
-    IdentityFile ~/.ssh/id_ed25519
-EOF
-chown vscode:vscode /home/vscode/.ssh/config
-chmod 600 /home/vscode/.ssh/config
-
-# Test SSH agent forwarding
+# Test SSH agent forwarding (using the correct method for VS Code)
 echo "--- Testing SSH agent forwarding ---"
 if [ -S "$SSH_AUTH_SOCK" ]; then
     echo "SSH agent socket found at: $SSH_AUTH_SOCK"
@@ -76,8 +59,9 @@ if [ -S "$SSH_AUTH_SOCK" ]; then
         echo "SSH agent socket exists but is not responding properly."
     fi
 else
-    echo "WARNING: SSH agent socket not found at $SSH_AUTH_SOCK"
-    echo "SSH agent forwarding may not be working."
+    echo "WARNING: SSH_AUTH_SOCK environment variable not set or socket not found."
+    echo "SSH agent forwarding may not be working through VS Code."
+    echo "Verify remote.SSH.enableAgentForwarding is true in VS Code settings."
 fi
 
 echo "--- Sourcing .zshrc for current session (optional, for postCreateCommand context) ---"
