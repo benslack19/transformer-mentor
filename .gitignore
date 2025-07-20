@@ -29,7 +29,8 @@ dist/
 notebooks/.ipynb_checkpoints/ # Specifically for the notebooks directory
 
 # Data and Models (Crucial for ML/DL projects!)
-data/ # Raw, processed, or intermediate data
+local_data/
+data/
 models/ # Trained model weights, checkpoints
 results/ # Experiment results, plots, logs
 logs/    # Application logs
