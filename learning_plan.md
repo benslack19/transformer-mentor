@@ -3,6 +3,19 @@ Here's a plan, broken down into modules, with a strong emphasis on hands-on codi
 **Core Principle:** For each component, we will first understand the theoretical concept, then implement it from scratch (or using fundamental libraries like NumPy/PyTorch), and finally, use higher-level libraries (like Hugging Face Transformers) to see it in action.
 
 ---
+#### **Module 0: PyTorch review**
+
+* **Goal:** Review PyTorch syntax
+* **Hands-on Coding:**
+  * **0.1 Run through PyTorch ["Learn the Basics"](https://docs.pytorch.org/tutorials/beginner/basics/intro.html):**
+    * Tensors
+    * Datasets & DataLoaders
+    * Transforms
+    * Build Model
+    * Autograd
+    * Optimization
+    * Save & Load Model
+
 
 #### **Module 1: Revisiting Core Concepts (Refresher & Deep Dive)**
 
