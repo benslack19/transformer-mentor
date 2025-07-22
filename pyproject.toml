@@ -96,8 +96,7 @@ exclude = [
     "dist",
     ".venv",
     "env",
-    "venv",
-    "notebooks" # Exclude notebooks from linting if you prefer
+    "venv"
 ]
 
 [tool.ruff.per-file-ignores]
