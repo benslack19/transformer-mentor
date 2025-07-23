@@ -65,4 +65,5 @@ fi
 echo "--- Sourcing .zshrc for current session (optional, for postCreateCommand context) ---"
 zsh -c 'source ~/.zshrc' || true
 
+
 echo "--- Dev container setup complete! ---"
