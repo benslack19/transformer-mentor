@@ -53,6 +53,9 @@ dev = [
 Homepage = "https://github.com/your-username/transformer-mentor" # Update this
 "Bug Tracker" = "https://github.com/your-username/transformer-mentor/issues" # Update this
 
+[tool.setuptools.packages.find]
+exclude = ["local_data", "notebooks*"]
+
 [tool.hatch.envs.default]
 # This section remains the same, Hatch will pick up dev dependencies
 # when installing via `pip install -e .[dev]` or similar.
