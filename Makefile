@@ -21,7 +21,8 @@ setup:
 	$(VENV_DIR)/bin/pip install -e .[dev] && \
 	$(VENV_DIR)/bin/pip install pre-commit
 	@echo "Virtual environment setup complete. Installing pre-commit hooks..."
-	@$(PYTHON) -m pre_commit install
+	# Temporarily unset core.hooksPath for this command using Git environment variables
+	@GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0="" $(PYTHON) -m pre_commit install
 	@echo "Pre-commit hooks installed."
 
 $(PIP):

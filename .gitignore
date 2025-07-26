@@ -58,3 +58,6 @@ logs/    # Application logs
 
 # Devcontainer
 .devcontainer/devcontainer.json
+.devcontainer/Dockerfile.work
+.devcontainer/setup_work.sh
+.devcontainer/netskoperoot.crt
