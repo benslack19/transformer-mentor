@@ -40,7 +40,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
 # Copy .zshrc-template and setup.sh from the local build context
 # Ensure these files are present in the root of your local repository
 COPY .zshrc-template /home/$USERNAME/.zshrc.template
-COPY setup.sh /usr/local/bin/setup.sh
+COPY .devcontainer/setup.sh /usr/local/bin/setup.sh
 
 # Make setup.sh executable and set its ownership after copying
 # This ensures it can be run by the non-root user.
