@@ -6,11 +6,13 @@ set -e
 echo "--- Running make setup ---"
 make setup
 
+# rm -rf /root/.ssh
+
 echo "--- Changing default shell to zsh ---"
 # Make sure zsh is actually installed before trying to chsh
 if command -v zsh &> /dev/null; then
   # Use sudo here to run chsh without a password if sudoers is configured
-  sudo chsh -s "$(command -v zsh)" vscode || true # chsh might fail if user is already zsh, so allow it to fail
+  sudo chsh -s "$(command -v zsh)" root || true # chsh might fail if user is already zsh, so allow it to fail
 else
   echo "Zsh not found, skipping chsh."
 fi
@@ -70,5 +72,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-~/.
 # echo "--- Sourcing .zshrc for current session (optional, for postCreateCommand context) ---"
 # zsh -c 'source ~/.zshrc' || true
 
+# Set ownership of .ssh directory to root
+# chown -R root:root /root/.ssh
 
 echo "--- Dev container setup complete! ---"
