@@ -25,7 +25,7 @@ dependencies = [
     "pandas>=2.2.0",
     "torch>=2.3.0", # Adjust if you target specific CUDA versions for cloud GPUs later
     "torchvision>=0.16.0",
-    "torchtext>=0.18.0",
+    "torchtext",
     "transformers>=4.0.0",
     "datasets>=2.0.0",
     "tqdm>=4.0.0",
