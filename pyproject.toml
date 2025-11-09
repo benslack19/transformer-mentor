@@ -48,7 +48,9 @@ dev = [
     "mypy>=1.0.0", # For static type checking (optional, but good practice)
     "build>=1.0.0", # For building packages
     "twine>=4.0.0", # For uploading to PyPI
-    "watermark"
+    "watermark",
+    "ipython>=8.0.0",
+    "ipykernel>=6.0.0"
 ]
 
 [project.urls]
