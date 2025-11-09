@@ -53,10 +53,6 @@ dev = [
     "ipykernel>=6.0.0"
 ]
 
-[project.urls]
-Homepage = "https://github.com/your-username/transformer-mentor" # Update this
-"Bug Tracker" = "https://github.com/your-username/transformer-mentor/issues" # Update this
-
 [tool.setuptools.packages.find]
 exclude = ["local_data", "notebooks*"]
 
@@ -109,5 +105,3 @@ exclude = [
 [tool.ruff.per-file-ignores]
 "*.py" = ["D"] # Ignore all docstring warnings in Python files globally
 "notebooks/*" = ["D", "E501", "F401", "F841"] # More lenience for notebooks
-
-# ... (other tool configurations like mypy, if added)
