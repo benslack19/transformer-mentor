@@ -66,6 +66,30 @@ cd transformer-mentor
 
 The first time you open the project in a Dev Container, it will take some time to build the Docker image and set up the environment (installing Python dependencies, Zsh, Oh My Zsh, etc.). Subsequent opens will be much faster.
 
+4.  Verify ssh-agent forwarding.
+
+    a. In host terminal:
+
+    ```bash
+    # Kill any existing ssh-agent processes to start clean
+    killall ssh-agent
+
+    # Start a fresh agent and capture its environment variables
+    # Verify output is something like `Agent pid XXXXX`
+    eval "$(ssh-agent -s)"
+
+    # Add your key (enter passphrase if applicable)
+    ssh-add ~/.ssh/id_ed25519 # Or your specific key path
+
+    # Verify keys are loaded in the output of the following
+    ssh-add -l
+    ```
+
+    b. In VSCode Settings:
+    - Verify that `terminal.integrated.inheritEnv` is checked/set to `true`.
+
+    c. Completely quit and restart VSCode and Docker Desktop. Reopen the container.
+
 ### 3. Verify Setup
 
 Once the Dev Container is ready, open a new terminal inside VS Code (``` Ctrl+``  ``` or `View > Terminal`). You should see:
