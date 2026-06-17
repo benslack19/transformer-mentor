@@ -60,3 +60,5 @@ logs/    # Application logs
 .devcontainer/Dockerfile.work
 .devcontainer/netskoperoot.crt
 .vscode/
+
+.claude

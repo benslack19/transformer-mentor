@@ -37,6 +37,7 @@ dropout = 0.2
 device = torch.device("cpu")
 if torch.cuda.is_available():
     device = torch.device("cuda")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 torch.manual_seed(1337)
@@ -118,6 +119,8 @@ class Head(nn.Module):
         # tril is not a parameter of the model
         # in pytorch naming conventions this is called a buffer, not a parameter
         self.register_buffer("tril", torch.tril(torch.ones(block_size, block_size)))
+        self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
+        self.dropout_p = dropout
 
         # https://docs.pytorch.org/docs/stable/generated/torch.nn.Dropout.html
         # happens on every forward and backward pass
@@ -143,6 +146,14 @@ class Head(nn.Module):
         # perform the weighted aggregation of the values
         v = self.value(x)  # (B, T, C)
         out = wei @ v  # (B, T, T) @ (B, T, C) -> (B, T, C)
+        
+        # Use optimized scaled_dot_product_attention for efficiency.
+        # This replaces manual scaling, masking, softmax, and dropout.
+        out = F.scaled_dot_product_attention(
+            q, k, v, 
+            is_causal=True, 
+            dropout_p=self.dropout_p if self.training else 0.0
+        )
         return out
 
 
@@ -361,3 +372,4 @@ for i in range(max_iters):
 # generate from the model
 context = torch.zeros((1, 1), dtype=torch.long, device=device)  # generate on the device (cpu/cuda)
 print(decode(m.generate(idx=torch.zeros((1, 1), dtype=torch.long), max_new_tokens=500)[0].tolist()))
+print(decode(m.generate(idx=context, max_new_tokens=500)[0].tolist()))
